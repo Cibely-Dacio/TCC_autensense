@@ -1,6 +1,6 @@
 async function testarBackend() {
   try {
-    const resposta = await fetch("http://localhost:3000/api/locais");
+    const resposta = await fetch(`${API_BASE}/api/locais`);
     const dados = await resposta.json();
     console.log("Dados vindos do backend:", dados);
   } catch (erro) {
@@ -13,7 +13,7 @@ testarBackend();
 // ============================================================
 // AUTENTICAÇÃO LOCAL / SESSÃO
 // ============================================================
-const API_BASE = "http://localhost:3000";
+const API_BASE = "";
 const USER_STORAGE_KEY = "autensense-current-user";
 
 function salvarUsuarioLocal(user) {
@@ -1091,7 +1091,7 @@ async function loadPlaces() {
 
 async function carregarLocaisDoBackend() {
   try {
-    const resposta = await fetch("http://localhost:3000/api/locais");
+    const resposta = await fetch(`${API_BASE}/api/locais`);
     const dados = await resposta.json();
 
     placesData = dados.map(local => ({
@@ -1297,21 +1297,23 @@ document.addEventListener("click", async event => {
 
   try {
     if (favoritosIds.has(placeId)) {
-      await fetch(`http://localhost:3000/api/favoritos/${currentUser.uid}/${placeId}`, {
-        method: "DELETE"
+      await fetch(`${API_BASE}/api/favoritos`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usuario_id: currentUser.uid, local_id: placeId })
       });
 
       favoritosIds.delete(placeId);
       showToast("Removido dos favoritos.");
     } else {
-      await fetch("http://localhost:3000/api/favoritos", {
+      await fetch(`${API_BASE}/api/favoritos`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          userId: currentUser.uid,
-          placeId
+          usuario_id: currentUser.uid,
+          local_id: placeId
         })
       });
 
@@ -1333,7 +1335,7 @@ async function loadFavoritos() {
   if (!currentUser) return;
 
   try {
-    const resposta = await fetch(`http://localhost:3000/api/favoritos/${currentUser.uid}`);
+    const resposta = await fetch(`${API_BASE}/api/favoritos?usuario_id=${currentUser.uid}`);
     const favoritos = await resposta.json();
 
     favoritosIds = new Set(favoritos.map(item => item.placeId));
@@ -1734,19 +1736,18 @@ document.getElementById("btnSendRate")?.addEventListener("click", async () => {
   const msg = document.getElementById("rateMsg");
 
   try {
-    const resposta = await fetch("http://localhost:3000/api/avaliacoes", {
+    const resposta = await fetch(`${API_BASE}/api/avaliacoes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        userId: currentUser.uid,
-        userName: currentUser.displayName || "Anônimo",
-        placeId,
-        noise,
-        light,
-        flow,
-        note
+        usuario_id: currentUser.uid,
+        local_id: placeId,
+        ruido: noise,
+        iluminacao: light,
+        movimento: flow,
+        comentario: note
       })
     });
 
@@ -1776,7 +1777,7 @@ async function loadMyRatings() {
   }
 
   try {
-    const resposta = await fetch(`http://localhost:3000/api/avaliacoes/usuario/${currentUser.uid}`);
+    const resposta = await fetch(`${API_BASE}/api/avaliacoes?usuario_id=${currentUser.uid}`);
     const avaliacoes = await resposta.json();
 
     if (!avaliacoes.length) {
