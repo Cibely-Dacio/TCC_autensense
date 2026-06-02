@@ -1480,7 +1480,8 @@ function getFilteredPlaces() {
   const q = normalizeText(filterQueryInput?.value || "");
   const cat = filterCategorySelect?.value || "todos";
   const levelSelected = filterLevelSelect?.value || "todos";
-  const citySelected = normalizeText(homeCitySelect?.value || "");
+  const urlParams = new URLSearchParams(window.location.search);
+  const citySelected = normalizeText(homeCitySelect?.value || urlParams.get('city') || "");
 
   resetDistanceCache(placesData);
 
@@ -1619,14 +1620,11 @@ document.addEventListener("click", event => {
 });
 
 document.getElementById("btnSearch")?.addEventListener("click", () => {
-  initMapIfNeeded();
-  setView("maps");
-
-  if (filterQueryInput) filterQueryInput.value = homeSearchInput?.value || "";
-  if (filterCategorySelect) filterCategorySelect.value = homeCategorySelect?.value || "todos";
-  if (filterLevelSelect) filterLevelSelect.value = homeSensorySelect?.value || "todos";
-
-  setTimeout(applyFilters, 120);
+  const q = document.getElementById("q")?.value || "";
+  const city = document.getElementById("city")?.value || "";
+  const cat = document.getElementById("category")?.value || "";
+  const sens = document.getElementById("sensory")?.value || "";
+  window.location.href = `mapas.html?q=${encodeURIComponent(q)}&city=${encodeURIComponent(city)}&cat=${encodeURIComponent(cat)}&sensory=${encodeURIComponent(sens)}`;
 });
 
 // ============================================================
@@ -1656,6 +1654,12 @@ function fillRateSelect() {
 });
 
 document.getElementById("btnSendRate")?.addEventListener("click", async () => {
+  if (!currentUser) {
+    showToast("Faça login ou crie uma conta para salvar.", true);
+    document.getElementById("btnAuthToggle")?.click();
+    return;
+  }
+
   if (!currentUser) {
     showToast("Faça login para avaliar locais.");
     setView("auth");
@@ -1752,6 +1756,12 @@ async function loadMyRatings() {
 });
 
 document.getElementById("btnSavePerfil")?.addEventListener("click", async () => {
+  if (!currentUser) {
+    showToast("Faça login ou crie uma conta para salvar.", true);
+    document.getElementById("btnAuthToggle")?.click();
+    return;
+  }
+
   if (!currentUser) {
     showToast("Faça login para salvar perfis.");
     setView("auth");
@@ -2163,7 +2173,7 @@ attachAutocomplete(filterQueryInput, autocompleteMap, place => {
 
 // URL FILTERS
 function loadURLFilters() {
-  if (!document.getElementById("view-maps")) return;
+  
   
   const params = new URLSearchParams(window.location.search);
   const q = params.get('q');
@@ -2186,5 +2196,19 @@ function loadURLFilters() {
 // ============================================================
 initTheme();
 restaurarSessao();
-setView(localStorage.getItem(VIEW_STORAGE_KEY) || "home", { scroll: false });
+
+
+if (window.location.pathname.includes("mapas.html")) {
+  initMapIfNeeded();
+  setTimeout(loadURLFilters, 500);
+  setTimeout(renderRecommended, 600);
+} else if (window.location.pathname.includes("index.html") || window.location.pathname === "/" || window.location.pathname.endsWith("/")) {
+  // on home page, maybe init some home stuff if needed
+} else if (window.location.pathname.includes("avaliar.html")) {
+  fillRateSelect();
+  loadMyRatings();
+} else if (window.location.pathname.includes("perfil.html")) {
+  renderPerfilList();
+}
+
 carregarLocaisDoBackend();

@@ -451,7 +451,9 @@ body {
 ============================================================ */
 .recommendGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 18px;
   margin-top: 4px;
 }
@@ -701,7 +703,8 @@ body {
 ============================================================ */
 .gridMap {
   display: grid;
-  grid-template-columns: 290px 1fr;
+  grid-template-columns: 290px 1fr 340px;
+  align-items: stretch;
   gap: 18px;
   align-items: start;
   overflow: hidden;
@@ -2870,4 +2873,14 @@ body {
   margin-top: 14px;
   padding-top: 12px;
   border-top: 1px dashed var(--line);
+}
+
+.recommendedPanel {
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
 }
