@@ -13,7 +13,7 @@ const topbarHTML = `
       <a class="navLink" id="nav-maps" href="mapas.html">Mapas</a>
       <a class="navLink" id="nav-rate" href="avaliar.html">Avaliar</a>
       <a class="navLink" id="nav-perfil" href="perfil.html">Perfil TEA</a>
-      <a class="navLink" id="nav-about" href="sobre.html">Sobre</a>
+      <a class="navLink" id="nav-about" href="index.html#view-about">Sobre</a>
     </nav>
     <div class="topbarActions">
       <button id="themeToggle" class="themeToggle" type="button" aria-label="Alternar modo visual">

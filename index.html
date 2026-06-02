@@ -68,12 +68,7 @@
         </div>
       </div>
 
-      <div class="geoRow">
-        <button id="btnLiveStart" class="btn geoBtn">📍 Ativar localização ao vivo</button>
-        <button id="btnLiveStop" class="btn geoBtnStop hidden">⏹ Parar ao vivo</button>
-        <button id="btnCenterMe" class="btn geoBtnGhost">Centralizar no meu ponto</button>
-        <span id="geoStatus" class="geoStatus"></span>
-      </div>
+      
     </div>
 
     <div class="heroCard">
@@ -144,8 +139,8 @@
         <p>Ative seu perfil TEA e receba recomendações personalizadas.</p>
       </div>
       <div class="ctaRight">
-        <button class="btn primary" data-view="perfil">Criar perfil TEA</button>
-        <button class="btn ctaGhost" data-view="maps">Ver mapa</button>
+        <a href="perfil.html" class="btn primary">Criar perfil TEA</a>
+        <a href="mapas.html" class="btn ctaGhost">Ver mapa</a>
       </div>
     </div>
 
@@ -153,6 +148,39 @@
 
   <!-- MAPS -->
   
+
+<section id="view-about" class="view">
+    <div class="aboutHero">
+      <h2 class="aboutTitle">Sobre o <span class="heroGradient">AutenSense</span></h2>
+      <p class="aboutSub">
+        Uma plataforma colaborativa que ajuda famílias, cuidadores e pessoas com Transtorno do Espectro Autista (TEA)
+        a encontrar ambientes adequados às suas necessidades sensoriais. Personalize, explore e contribua com a comunidade.
+      </p>
+    </div>
+
+    <div class="aboutGrid">
+      <div class="aboutCard">
+        <div class="aboutCardIcon">🗺️</div>
+        <h3>Mapa colaborativo</h3>
+        <p>Locais avaliados pela comunidade com marcadores coloridos por nível sensorial — tranquilo, moderado ou alerta.</p>
+      </div>
+      <div class="aboutCard">
+        <div class="aboutCardIcon">👤</div>
+        <h3>Perfil personalizado</h3>
+        <p>Ranking adaptado às sensibilidades únicas de cada pessoa, com pesos configuráveis de ruído, luz e movimento.</p>
+      </div>
+      <div class="aboutCard">
+        <div class="aboutCardIcon">📍</div>
+        <h3>Localização em tempo real</h3>
+        <p>Rastreamento ao vivo com precisão de GPS, útil para cuidadores acompanhando a jornada.</p>
+      </div>
+      <div class="aboutCard">
+        <div class="aboutCardIcon">☁️</div>
+        <h3>Dados seguros na nuvem</h3>
+        <p>Seus perfis e avaliações são salvos com segurança e sincronizados automaticamente.</p>
+      </div>
+    </div>
+  </section>
 </main>
 <script src="components.js"></script>
 <script type="module" src="app.js"></script>
