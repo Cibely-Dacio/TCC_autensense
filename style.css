@@ -703,11 +703,10 @@ body {
 ============================================================ */
 .gridMap {
   display: grid;
-  grid-template-columns: 290px 1fr 340px;
+  grid-template-columns: minmax(250px, 290px) 1fr minmax(280px, 340px);
   align-items: stretch;
   gap: 18px;
-  align-items: start;
-  overflow: hidden;
+    overflow: hidden;
 }
 
 .filterPanel {
@@ -730,11 +729,14 @@ body {
   padding: 18px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   z-index: 1;
 }
 .map {
   width: 100%;
-  height: 560px;
+  flex: 1;
+  min-height: 560px;
   border-radius: 14px;
   border: 1.5px solid var(--line);
   overflow: hidden;
@@ -2883,4 +2885,18 @@ body {
   padding: 18px;
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 1200px) {
+  .gridMap {
+    grid-template-columns: 290px 1fr !important;
+  }
+  .recommendedPanel {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 900px) {
+  .gridMap {
+    grid-template-columns: 1fr !important;
+  }
 }
