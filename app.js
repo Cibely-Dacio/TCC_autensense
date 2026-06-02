@@ -869,7 +869,7 @@ document.getElementById("btnRegister")?.addEventListener("click", async () => {
   const msg = document.getElementById("regMsg");
 
   try {
-    const resposta = await fetch(`${API_BASE}/api/auth/register`, {
+    const resposta = await fetch(`${API_BASE}/api/usuarios?acao=registrar`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -883,12 +883,12 @@ document.getElementById("btnRegister")?.addEventListener("click", async () => {
 
     const data = await resposta.json();
 
-    if (!resposta.ok) {
-      msg.textContent = "Erro: " + traduzErroApi(data.code);
+    if (!resposta.ok || data.erro) {
+      msg.textContent = "Erro: " + (data.mensagem || "Desconhecido");
       return;
     }
 
-    await iniciarSessao(data.user);
+    await iniciarSessao(data.usuario);
     msg.textContent = "Conta criada com sucesso!";
     setTimeout(() => setView("home"), 900);
   } catch (e) {
@@ -903,7 +903,7 @@ document.getElementById("btnLogin")?.addEventListener("click", async () => {
   const msg = document.getElementById("loginMsg");
 
   try {
-    const resposta = await fetch(`${API_BASE}/api/auth/login`, {
+    const resposta = await fetch(`${API_BASE}/api/usuarios?acao=login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -916,12 +916,12 @@ document.getElementById("btnLogin")?.addEventListener("click", async () => {
 
     const data = await resposta.json();
 
-    if (!resposta.ok) {
-      msg.textContent = "Erro: " + traduzErroApi(data.code);
+    if (!resposta.ok || data.erro) {
+      msg.textContent = "Erro: " + (data.mensagem || "Desconhecido");
       return;
     }
 
-    await iniciarSessao(data.user);
+    await iniciarSessao(data.usuario);
     msg.textContent = "Login realizado!";
     setTimeout(() => setView("home"), 700);
   } catch (e) {
@@ -955,7 +955,7 @@ document.getElementById("btnForgotPassword")?.addEventListener("click", async ()
   }
 
   try {
-    const resposta = await fetch(`${API_BASE}/api/auth/reset-password-request`, {
+    const resposta = await fetch(`${API_BASE}/api/usuarios?acao=recuperar`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -965,13 +965,13 @@ document.getElementById("btnForgotPassword")?.addEventListener("click", async ()
 
     const data = await resposta.json();
 
-    if (!resposta.ok) {
-      msg.textContent = "Erro: " + traduzErroApi(data.code);
+    if (!resposta.ok || data.erro) {
+      msg.textContent = "Erro: " + (data.mensagem || "Desconhecido");
       return;
     }
 
-    msg.textContent = `Senha temporária gerada: ${data.temporaryPassword}`;
-    showToast("Senha temporária gerada.");
+    msg.textContent = data.mensagem;
+    showToast("Solicitação enviada.");
   } catch (e) {
     console.error("RESET PASSWORD:", e);
     msg.textContent = "Erro ao recuperar senha.";
