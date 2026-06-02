@@ -1,0 +1,9 @@
+{
+  "name": "autensense-backend",
+  "version": "1.0.0",
+  "description": "Backend Serverless Vercel",
+  "dependencies": {
+    "@vercel/postgres": "^0.10.0",
+    "bcryptjs": "^2.4.3"
+  }
+}
