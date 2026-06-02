@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AutenSense — Mapa Sensorial</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body data-theme="sensory">
+
+<!-- ===== TOPBAR ===== -->
+<header class="topbar">
+  <div class="topbarInner">
+    <div class="brand">
+      <img src="imagens/iconeLogo.png" alt="Logo AutenSense" class="brandLogo"/>
+      <div class="brandText">
+        <strong>AutenSense</strong>
+        <span>mapa sensorial</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="navLink active" data-view="home">Início</button>
+      <button class="navLink" data-view="maps">Mapas</button>
+      <button class="navLink" data-view="rate">Avaliar</button>
+      <button class="navLink" data-view="perfil">Perfil TEA</button>
+      <button class="navLink" data-view="about">Sobre</button>
+    </nav>
+    <div class="topbarActions">
+      <button id="themeToggle" class="themeToggle" type="button" aria-label="Alternar modo visual">
+        <span class="themeTogglePill">
+          <span id="themeToggleIcon" class="themeToggleIcon">🌿</span>
+          <span id="themeToggleText" class="themeToggleText">Modo Sensorial</span>
+        </span>
+      </button>
+      <span id="userDisplayName" class="userChip hidden"></span>
+      <button class="btn ghost" id="btnAuthToggle" data-view="auth">Entrar</button>
+      <button class="btn danger-soft btnLogout hidden">Sair</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="heroInner">
+    <div class="heroContent">
+      <div class="heroBadge">Plataforma de Mapeamento Sensorial</div>
+      <h1 class="heroTitle">
+        O mundo sensorial<br/>
+        <span class="heroGradient">na palma da mão</span>
+      </h1>
+      <p class="heroSub">
+        Ajudamos famílias e cuidadores de pessoas com autismo a encontrar
+        <strong>ambientes seguros e confortáveis</strong> — com mapa colaborativo,
+        filtros sensoriais e perfis personalizados.
+      </p>
+
+      <div class="searchCard">
+        <div class="searchRow">
+          <div class="searchField autocompleteWrap">
+            <span class="searchFieldIcon">
+              <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <circle cx="8" cy="8" r="5"/>
+                <path d="M13 13l3 3"/>
+              </svg>
+            </span>
+            <input id="q" type="text" placeholder="Buscar local seguro..." autocomplete="off"/>
+            <div id="ac_q" class="autocomplete hidden"></div>
+          </div>
+
+          <select id="city" class="select">
+            <option value="">Cidade</option>
+            <option value="Manaus">Manaus</option>
+            <option value="Todas">Todas</option>
+          </select>
+
+          <select id="category" class="select">
+            <option value="">Tipo de ambiente</option>
+            <option value="mercado">Mercado / Supermercado</option>
+            <option value="shopping">Shopping</option>
+            <option value="cultural">Cultural / Turismo</option>
+            <option value="parque">Parque</option>
+            <option value="infantil">Infantil / Recreação</option>
+            <option value="natureza">Natureza / Museu</option>
+            <option value="gastronomia">Gastronomia</option>
+          </select>
+
+          <select id="sensory" class="select">
+            <option value="">Nível sensorial</option>
+            <option value="baixo">Tranquilo</option>
+            <option value="medio">Moderado</option>
+            <option value="alto">Alerta</option>
+          </select>
+
+          <button id="btnSearch" class="btn primary btnSearch">Pesquisar</button>
+        </div>
+      </div>
+
+      <div class="geoRow">
+        <button id="btnLiveStart" class="btn geoBtn">📍 Ativar localização ao vivo</button>
+        <button id="btnLiveStop" class="btn geoBtnStop hidden">⏹ Parar ao vivo</button>
+        <button id="btnCenterMe" class="btn geoBtnGhost">Centralizar no meu ponto</button>
+        <span id="geoStatus" class="geoStatus"></span>
+      </div>
+    </div>
+
+    <div class="heroCard">
+      <img src="imagens/hero.jpg" alt="Ambientes sensoriais seguros para autismo"/>
+    </div>
+  </div>
+
+  <div class="statsStrip">
+    <div class="statItem">
+      <span class="statNum">17+</span>
+      <span class="statLabel">Locais mapeados</span>
+    </div>
+    <div class="statDivider"></div>
+    <div class="statItem">
+      <span class="statNum">3</span>
+      <span class="statLabel">Filtros sensoriais</span>
+    </div>
+    <div class="statDivider"></div>
+    <div class="statItem">
+      <span class="statNum">100%</span>
+      <span class="statLabel">Colaborativo</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MAIN ===== -->
+<main class="container">
+
+  <!-- HOME -->
+  <section id="view-home" class="view">
+
+    <div class="sectionHeader">
+      <div>
+        <h2 class="sectionTitle">Locais Recomendados</h2>
+        <p class="sectionSub">Classificados pelo perfil sensorial ativo</p>
+      </div>
+      <div id="rankingSubtitle"></div>
+    </div>
+    <div id="recommended"></div>
+
+    <div class="sectionHeader" style="margin-top:60px">
+      <div>
+        <h2 class="sectionTitle">Como funciona</h2>
+        <p class="sectionSub">Três passos simples para encontrar o lugar certo</p>
+      </div>
+    </div>
+    <div class="howGrid">
+      <div class="howCard">
+        <div class="howNum">01</div>
+        <h3>Pesquise</h3>
+        <p>Digite o nome do local ou use os filtros sensoriais de ruído, iluminação e movimento.</p>
+      </div>
+      <div class="howArrow" aria-hidden="true">→</div>
+      <div class="howCard howCard--accent">
+        <div class="howNum">02</div>
+        <h3>Veja no mapa</h3>
+        <p>Pins coloridos por nível sensorial e sua localização em tempo real na palma da mão.</p>
+      </div>
+      <div class="howArrow" aria-hidden="true">→</div>
+      <div class="howCard">
+        <div class="howNum">03</div>
+        <h3>Avalie e contribua</h3>
+        <p>Compartilhe sua experiência. As avaliações ajudam toda a comunidade.</p>
+      </div>
+    </div>
+
+    <div class="ctaBanner">
+      <div class="ctaLeft">
+        <h3>Pronto para explorar?</h3>
+        <p>Ative seu perfil TEA e receba recomendações personalizadas.</p>
+      </div>
+      <div class="ctaRight">
+        <button class="btn primary" data-view="perfil">Criar perfil TEA</button>
+        <button class="btn ctaGhost" data-view="maps">Ver mapa</button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- MAPS -->
+  <section id="view-maps" class="view hidden">
+    <div class="sectionHeader">
+      <div>
+        <h2 class="sectionTitle">Mapa Sensorial</h2>
+        <p class="sectionSub">Explore locais filtrados pelas suas necessidades</p>
+      </div>
+      <div class="row">
+        <button id="btnLiveStart2" class="btn geoBtn">📍 Ao vivo</button>
+        <button id="btnLiveStop2" class="btn geoBtnStop hidden">⏹ Parar</button>
+      </div>
+    </div>
+
+    <div class="gridMap">
+      <aside class="filterPanel">
+        <h3 class="filterTitle">Filtros</h3>
+
+        <label class="label">Busca</label>
+        <div class="autocompleteWrap">
+          <input id="f_q" class="input" type="text" placeholder="Ex: praça, biblioteca…" autocomplete="off"/>
+          <div id="ac_fq" class="autocomplete hidden"></div>
+        </div>
+
+        <label class="label">Categoria</label>
+        <select id="f_cat" class="select">
+          <option value="todos">Todas</option>
+          <option value="mercado">Mercado / Supermercado</option>
+          <option value="shopping">Shopping</option>
+          <option value="cultural">Cultural / Turismo</option>
+          <option value="parque">Parque</option>
+          <option value="infantil">Infantil / Recreação</option>
+          <option value="natureza">Natureza / Museu</option>
+          <option value="gastronomia">Gastronomia</option>
+        </select>
+
+        <label class="label">Nível sensorial</label>
+        <select id="f_level" class="select">
+          <option value="todos">Todos</option>
+          <option value="baixo">Tranquilo</option>
+          <option value="medio">Moderado</option>
+          <option value="alto">Alerta</option>
+        </select>
+
+        <label class="check">
+          <input id="f_near" type="checkbox"/>
+          Somente próximos (usa sua localização)
+        </label>
+
+        <div class="row" style="margin-top:10px">
+          <span class="small muted">Raio:</span>
+          <select id="f_radius" class="select smallSelect">
+            <option value="1">1 km</option>
+            <option value="3" selected>3 km</option>
+            <option value="5">5 km</option>
+            <option value="10">10 km</option>
+          </select>
+        </div>
+
+        <div class="filterActions">
+          <button id="btnApplyFilters" class="btn primary" style="flex:1">Aplicar</button>
+          <button id="btnClearFilters" class="btn soft">Limpar</button>
+        </div>
+
+        <div class="legend">
+          <div class="legItem"><span class="dot green"></span> Tranquilo</div>
+          <div class="legItem"><span class="dot yellow"></span> Moderado</div>
+          <div class="legItem"><span class="dot red"></span> Alerta</div>
+          <div class="legItem"><span class="dot blue"></span> Você</div>
+        </div>
+      </aside>
+
+      <section class="mapSection">
+        <div id="map" class="map"></div>
+        <div class="resultsHeader"><h3>Resultados</h3></div>
+        <div id="results" class="cardsList"></div>
+      </section>
+    </div>
+  </section>
+
+  <!-- RATE -->
+  <section id="view-rate" class="view hidden">
+    <div class="sectionHeader">
+      <div>
+        <h2 class="sectionTitle">Avaliar Locais</h2>
+        <p class="sectionSub">Sua experiência ajuda toda a comunidade TEA</p>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3 class="cardTitle">Nova avaliação</h3>
+        <p class="muted small">Compartilhe sua experiência no local.</p>
+
+        <label class="label">Qual local deseja avaliar?</label>
+        <select id="rate_place" class="select"></select>
+
+        <div class="sliderGroup">
+          <div class="sliderCard">
+            <div class="sliderLabel">🔊 Ruído</div>
+            <input type="range" id="rate_noise" min="1" max="5" value="3" class="slider"/>
+            <div class="sliderVal"><span id="rate_noise_val">3</span>/5</div>
+          </div>
+          <div class="sliderCard">
+            <div class="sliderLabel">💡 Iluminação</div>
+            <input type="range" id="rate_light" min="1" max="5" value="3" class="slider"/>
+            <div class="sliderVal"><span id="rate_light_val">3</span>/5</div>
+          </div>
+          <div class="sliderCard">
+            <div class="sliderLabel">🚶 Movimento</div>
+            <input type="range" id="rate_flow" min="1" max="5" value="3" class="slider"/>
+            <div class="sliderVal"><span id="rate_flow_val">3</span>/5</div>
+          </div>
+        </div>
+
+        <label class="label">Comentário (opcional)</label>
+        <textarea id="rate_note" class="textarea" rows="4" placeholder="Descreva sua experiência no local..."></textarea>
+        <button id="btnSendRate" class="btn primary" style="margin-top:14px;width:100%">Enviar avaliação</button>
+        <p id="rateMsg" class="small muted" style="margin-top:8px"></p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="card">
+          <h3 class="cardTitle">Como avaliar</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="stepNum">1</div>
+              <div><strong>Escolha o local</strong><p class="muted small">Da lista de locais cadastrados.</p></div>
+            </div>
+            <div class="step">
+              <div class="stepNum">2</div>
+              <div><strong>Marque os estímulos</strong><p class="muted small">Ruído, luz e movimento (1 = mínimo, 5 = máximo).</p></div>
+            </div>
+            <div class="step">
+              <div class="stepNum">3</div>
+              <div><strong>Envie</strong><p class="muted small">Sua avaliação é salva e compartilhada.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 class="cardTitle">Minhas avaliações</h3>
+          <div id="myRatings" class="cardsList" style="margin-top:10px"></div>
+        </div>
+        <button class="btn soft" data-view="maps">← Voltar ao mapa</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERFIL TEA -->
+  <section id="view-perfil" class="view hidden">
+    <div class="sectionHeader">
+      <div>
+        <h2 class="sectionTitle">Perfil TEA</h2>
+        <p class="sectionSub">Personalize o ranking de locais para cada pessoa</p>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3 class="cardTitle">Novo perfil</h3>
+
+        <label class="label">Nome</label>
+        <input id="perfil_nome" class="input" placeholder="Nome da criança ou pessoa"/>
+
+        <label class="label">Idade</label>
+        <input id="perfil_idade" class="input" type="number" min="1" max="99" placeholder="Ex: 8"/>
+
+        <label class="label">Nível de suporte (TEA)</label>
+        <select id="perfil_nivel" class="select">
+          <option value="1">Nível 1 — Baixo suporte</option>
+          <option value="2" selected>Nível 2 — Suporte moderado</option>
+          <option value="3">Nível 3 — Alto suporte</option>
+        </select>
+
+        <div class="card insetCard" style="margin-top:16px">
+          <h4 class="cardTitle" style="font-size:14px">Pesos de Sensibilidade</h4>
+          <p class="muted small">1 = pouco sensível · 5 = muito sensível</p>
+          <div class="sliderGroup" style="margin-top:10px">
+            <div class="sliderCard">
+              <div class="sliderLabel">🔊 Ruído</div>
+              <input type="range" id="peso_ruido" min="1" max="5" value="3" class="slider"/>
+              <div class="sliderVal"><span id="peso_ruido_val">3</span>/5</div>
+            </div>
+            <div class="sliderCard">
+              <div class="sliderLabel">💡 Iluminação</div>
+              <input type="range" id="peso_luz" min="1" max="5" value="3" class="slider"/>
+              <div class="sliderVal"><span id="peso_luz_val">3</span>/5</div>
+            </div>
+            <div class="sliderCard">
+              <div class="sliderLabel">🚶 Movimento</div>
+              <input type="range" id="peso_movimento" min="1" max="5" value="3" class="slider"/>
+              <div class="sliderVal"><span id="peso_movimento_val">3</span>/5</div>
+            </div>
+          </div>
+        </div>
+
+        <label class="label">Observações / gatilhos</label>
+        <textarea id="perfil_obs" class="textarea" rows="3" placeholder="Ex: sensível a luz fluorescente, barulho de multidão…"></textarea>
+        <button id="btnSavePerfil" class="btn primary" style="margin-top:14px;width:100%">Salvar Perfil</button>
+        <p id="perfilMsg" class="small muted" style="margin-top:8px"></p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="card">
+          <h3 class="cardTitle">Perfis Salvos</h3>
+          <p class="muted small">Ative um perfil para personalizar o ranking.</p>
+          <div id="perfilList" class="cardsList" style="margin-top:12px"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="view-about" class="view hidden">
+    <div class="aboutHero">
+      <h2 class="aboutTitle">Sobre o <span class="heroGradient">AutenSense</span></h2>
+      <p class="aboutSub">
+        Uma plataforma colaborativa que ajuda famílias, cuidadores e pessoas com Transtorno do Espectro Autista (TEA)
+        a encontrar ambientes adequados às suas necessidades sensoriais. Personalize, explore e contribua com a comunidade.
+      </p>
+    </div>
+
+    <div class="aboutGrid">
+      <div class="aboutCard">
+        <div class="aboutCardIcon">🗺️</div>
+        <h3>Mapa colaborativo</h3>
+        <p>Locais avaliados pela comunidade com marcadores coloridos por nível sensorial — tranquilo, moderado ou alerta.</p>
+      </div>
+      <div class="aboutCard">
+        <div class="aboutCardIcon">👤</div>
+        <h3>Perfil personalizado</h3>
+        <p>Ranking adaptado às sensibilidades únicas de cada pessoa, com pesos configuráveis de ruído, luz e movimento.</p>
+      </div>
+      <div class="aboutCard">
+        <div class="aboutCardIcon">📍</div>
+        <h3>Localização em tempo real</h3>
+        <p>Rastreamento ao vivo com precisão de GPS, útil para cuidadores acompanhando a jornada.</p>
+      </div>
+      <div class="aboutCard">
+        <div class="aboutCardIcon">☁️</div>
+        <h3>Dados seguros na nuvem</h3>
+        <p>Seus perfis e avaliações são salvos com segurança e sincronizados automaticamente.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTH -->
+  <section id="view-auth" class="view hidden">
+    <div class="sectionHeader">
+      <div>
+        <h2 class="sectionTitle">Acesse sua conta</h2>
+        <p class="sectionSub">Salve perfis, avaliações e favoritos na nuvem</p>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3 class="cardTitle">Criar conta</h3>
+        <label class="label">Nome completo</label>
+        <input id="reg_name" class="input" placeholder="Seu nome"/>
+        <label class="label">E-mail</label>
+        <input id="reg_email" class="input" type="email" placeholder="email@email.com"/>
+        <label class="label">Senha</label>
+        <input id="reg_pass" class="input" type="password" placeholder="Mínimo 6 caracteres"/>
+        <button id="btnRegister" class="btn primary" style="margin-top:14px;width:100%">Criar conta</button>
+        <p id="regMsg" class="small muted" style="margin-top:8px"></p>
+      </div>
+      <div class="card">
+        <h3 class="cardTitle">Entrar</h3>
+        <label class="label">E-mail</label>
+        <input id="login_email" class="input" type="email" placeholder="email@email.com"/>
+        <label class="label">Senha</label>
+        <input id="login_pass" class="input" type="password" placeholder="********"/>
+
+        <button id="btnForgotPasswordToggle" class="authLinkBtn" type="button">Esqueci minha senha</button>
+
+        <div id="forgotPasswordBox" class="forgotPasswordBox hidden">
+          <label class="label">Recuperar senha por e-mail</label>
+          <input id="reset_email" class="input" type="email" placeholder="Digite seu e-mail cadastrado"/>
+          <button id="btnForgotPassword" class="btn soft" style="margin-top:12px;width:100%">Enviar link de redefinição</button>
+          <p id="resetMsg" class="small muted" style="margin-top:8px"></p>
+        </div>
+
+        <button id="btnLogin" class="btn primary" style="margin-top:14px;width:100%">Entrar</button>
+        <button class="btn soft btnLogout hidden" style="margin-top:8px;width:100%">Sair da conta</button>
+        <p id="loginMsg" class="small muted" style="margin-top:8px"></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="favToast" class="toast hidden">Salvo com sucesso</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
