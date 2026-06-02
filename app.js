@@ -2165,15 +2165,14 @@ document.getElementById("btnSearch")?.addEventListener("click", () => {
 // ============================================================
 function fillRateSelect() {
   if (!document.getElementById("view-rate")) return;
-  const select = document.getElementById("rate_place");
-  if (!select) return;
+  const list = document.getElementById("rate_place_list");
+  if (!list) return;
 
-  select.innerHTML = "";
+  list.innerHTML = "";
   placesData.forEach(place => {
     const option = document.createElement("option");
-    option.value = place.id;
-    option.textContent = place.name;
-    select.appendChild(option);
+    option.value = place.name;
+    list.appendChild(option);
   });
 }
 
@@ -2199,7 +2198,15 @@ document.getElementById("btnSendRate")?.addEventListener("click", async () => {
     return;
   }
 
-  const placeId = document.getElementById("rate_place").value;
+  const placeName = document.getElementById("rate_place_name").value.trim();
+  const placeObj = placesData.find(p => p.name === placeName);
+  
+  if (!placeObj) {
+    showToast("Por favor, pesquise e selecione um local da lista.", true);
+    return;
+  }
+  
+  const placeId = placeObj.id;
   const noise = Number(document.getElementById("rate_noise").value);
   const light = Number(document.getElementById("rate_light").value);
   const flow = Number(document.getElementById("rate_flow").value);
