@@ -1581,6 +1581,11 @@ function renderResults(list) {
               ? `<span class="resultDistance">${place._distance.toFixed(1)} km de você</span>`
               : ""
           }
+          ${
+            place.lat && place.lng
+              ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}" target="_blank" class="btn primary small" style="margin-top:10px; text-decoration:none; display:inline-block;">🗺️ Traçar Rota</a>`
+              : ""
+          }
         </div>
         <button class="btn soft btnSeeMap" data-focus="${escapeHtml(place.id)}">
           Ver no mapa
