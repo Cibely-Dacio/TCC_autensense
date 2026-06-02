@@ -1340,16 +1340,16 @@ document.getElementById("btnRegister")?.addEventListener("click", async () => {
     const data = await resposta.json();
 
     if (!resposta.ok || data.erro) {
-      msg.textContent = "Erro: " + (data.mensagem || "Desconhecido");
+      msg.textContent = "Erro: " + (data.mensagem || "Desconhecido"); msg.className = "msg-error";
       return;
     }
 
     await iniciarSessao(data.usuario);
-    msg.textContent = "Conta criada com sucesso!";
+    msg.textContent = "Conta criada com sucesso!"; msg.className = "msg-success";
     setTimeout(() => setView("home"), 900);
   } catch (e) {
     console.error("REGISTER:", e);
-    msg.textContent = "Erro ao criar conta.";
+    msg.textContent = "Erro ao criar conta."; msg.className = "msg-error";
   }
 });
 
@@ -1373,16 +1373,16 @@ document.getElementById("btnLogin")?.addEventListener("click", async () => {
     const data = await resposta.json();
 
     if (!resposta.ok || data.erro) {
-      msg.textContent = "Erro: " + (data.mensagem || "Desconhecido");
+      msg.textContent = "Erro: " + (data.mensagem || "Desconhecido"); msg.className = "msg-error";
       return;
     }
 
     await iniciarSessao(data.usuario);
-    msg.textContent = "Login realizado!";
+    msg.textContent = "Login realizado!"; msg.className = "msg-success";
     setTimeout(() => setView("home"), 700);
   } catch (e) {
     console.error("LOGIN:", e);
-    msg.textContent = "Erro ao realizar login.";
+    msg.textContent = "Erro ao realizar login."; msg.className = "msg-error";
   }
 });
 
@@ -1406,7 +1406,7 @@ document.getElementById("btnForgotPassword")?.addEventListener("click", async ()
   const msg = document.getElementById("resetMsg");
 
   if (!email) {
-    msg.textContent = "Informe o e-mail cadastrado.";
+    msg.textContent = "Informe o e-mail cadastrado."; msg.className = "msg-error";
     return;
   }
 
@@ -1422,15 +1422,15 @@ document.getElementById("btnForgotPassword")?.addEventListener("click", async ()
     const data = await resposta.json();
 
     if (!resposta.ok || data.erro) {
-      msg.textContent = "Erro: " + (data.mensagem || "Desconhecido");
+      msg.textContent = "Erro: " + (data.mensagem || "Desconhecido"); msg.className = "msg-error";
       return;
     }
 
-    msg.textContent = data.mensagem;
+    msg.textContent = data.mensagem; msg.className = "msg-success";
     showToast("Solicitação enviada.");
   } catch (e) {
     console.error("RESET PASSWORD:", e);
-    msg.textContent = "Erro ao recuperar senha.";
+    msg.textContent = "Erro ao recuperar senha."; msg.className = "msg-error";
   }
 });
 
@@ -2237,15 +2237,15 @@ document.getElementById("btnSendRate")?.addEventListener("click", async () => {
       throw new Error("Não foi possível salvar a avaliação.");
     }
 
-    msg.textContent = "Avaliação salva!";
+    msg.textContent = "Avaliação salva!"; msg.className = "msg-success";
     document.getElementById("rate_note").value = "";
     loadMyRatings();
     setTimeout(() => {
-      msg.textContent = "";
+      msg.textContent = ""; msg.className = "small muted";
     }, 4000);
   } catch (e) {
     console.error("Erro ao salvar avaliação no backend:", e);
-    msg.textContent = "Erro: " + e.message;
+    msg.textContent = "Erro: " + e.message; msg.className = "msg-error";
   }
 });
 
@@ -2322,7 +2322,7 @@ document.getElementById("btnSavePerfil")?.addEventListener("click", async () => 
   const msg = document.getElementById("perfilMsg");
 
   if (!nome) {
-    msg.textContent = "Informe o nome do perfil.";
+    msg.textContent = "Informe o nome do perfil."; msg.className = "msg-error";
     return;
   }
 
@@ -2347,18 +2347,18 @@ document.getElementById("btnSavePerfil")?.addEventListener("click", async () => 
     const data = await resposta.json();
 
     if (!resposta.ok) {
-      msg.textContent = "Erro: " + (data.erro || "Não foi possível salvar o perfil.");
+      msg.textContent = "Erro: " + (data.erro || "Não foi possível salvar o perfil."); msg.className = "msg-error";
       return;
     }
 
-    msg.textContent = "Perfil salvo!";
+    msg.textContent = "Perfil salvo!"; msg.className = "msg-success";
     renderPerfilList();
     setTimeout(() => {
-      msg.textContent = "";
+      msg.textContent = ""; msg.className = "small muted";
     }, 3000);
   } catch (e) {
     console.error("Erro ao salvar perfil:", e);
-    msg.textContent = "Erro ao salvar perfil.";
+    msg.textContent = "Erro ao salvar perfil."; msg.className = "msg-error";
   }
 });
 
