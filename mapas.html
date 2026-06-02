@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AutenSense — Mapa Sensorial</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body data-theme="sensory">
+
+
+<main class="container">
+<section id="view-maps" class="view">
+    <div class="sectionHeader">
+      <div>
+        <h2 class="sectionTitle">Mapa Sensorial</h2>
+        <p class="sectionSub">Explore locais filtrados pelas suas necessidades</p>
+      </div>
+      <div class="row">
+        <button id="btnLiveStart2" class="btn geoBtn">📍 Ao vivo</button>
+        <button id="btnLiveStop2" class="btn geoBtnStop hidden">⏹ Parar</button>
+      </div>
+    </div>
+
+    <div class="gridMap">
+      <aside class="filterPanel">
+        <h3 class="filterTitle">Filtros</h3>
+
+        <label class="label">Busca</label>
+        <div class="autocompleteWrap">
+          <input id="f_q" class="input" type="text" placeholder="Ex: praça, biblioteca…" autocomplete="off"/>
+          <div id="ac_fq" class="autocomplete hidden"></div>
+        </div>
+
+        <label class="label">Categoria</label>
+        <select id="f_cat" class="select">
+          <option value="todos">Todas</option>
+          <option value="mercado">Mercado / Supermercado</option>
+          <option value="shopping">Shopping</option>
+          <option value="cultural">Cultural / Turismo</option>
+          <option value="parque">Parque</option>
+          <option value="infantil">Infantil / Recreação</option>
+          <option value="natureza">Natureza / Museu</option>
+          <option value="gastronomia">Gastronomia</option>
+        </select>
+
+        <label class="label">Nível sensorial</label>
+        <select id="f_level" class="select">
+          <option value="todos">Todos</option>
+          <option value="baixo">Tranquilo</option>
+          <option value="medio">Moderado</option>
+          <option value="alto">Alerta</option>
+        </select>
+
+        <label class="check">
+          <input id="f_near" type="checkbox"/>
+          Somente próximos (usa sua localização)
+        </label>
+
+        <div class="row" style="margin-top:10px">
+          <span class="small muted">Raio:</span>
+          <select id="f_radius" class="select smallSelect">
+            <option value="1">1 km</option>
+            <option value="3" selected>3 km</option>
+            <option value="5">5 km</option>
+            <option value="10">10 km</option>
+          </select>
+        </div>
+
+        <div class="filterActions">
+          <button id="btnApplyFilters" class="btn primary" style="flex:1">Aplicar</button>
+          <button id="btnClearFilters" class="btn soft">Limpar</button>
+        </div>
+
+        <div class="legend">
+          <div class="legItem"><span class="dot green"></span> Tranquilo</div>
+          <div class="legItem"><span class="dot yellow"></span> Moderado</div>
+          <div class="legItem"><span class="dot red"></span> Alerta</div>
+          <div class="legItem"><span class="dot blue"></span> Você</div>
+        </div>
+      </aside>
+
+      <section class="mapSection">
+        <div id="map" class="map"></div>
+        <div class="resultsHeader"><h3>Resultados</h3></div>
+        <div id="results" class="cardsList"></div>
+      </section>
+</main>
+<script src="components.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
