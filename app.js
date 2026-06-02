@@ -278,14 +278,7 @@ const PRESET_COORDS = {
 // ============================================================
 // ELEMENTOS
 // ============================================================
-const views = {
-  home: document.getElementById("view-home"),
-  maps: document.getElementById("view-maps"),
-  rate: document.getElementById("view-rate"),
-  perfil: document.getElementById("view-perfil"),
-  about: document.getElementById("view-about"),
-  auth: document.getElementById("view-auth")
-};
+
 
 const chip = document.getElementById("userDisplayName");
 const btnAuthToggle = document.getElementById("btnAuthToggle");
@@ -716,82 +709,21 @@ function initTheme() {
 }
 
 // ============================================================
-// VIEWS
 // ============================================================
-const VIEW_STORAGE_KEY = "autensense:lastView";
-
-function getTopbarOffset() {
-  const topbar = document.querySelector(".topbar");
-  return (topbar?.offsetHeight || 0) + 18;
-}
-
-function focusActiveNavLink(name) {
-  document.querySelectorAll(".navLink").forEach(btn => {
-    const isActive = btn.dataset.view === name;
-    btn.classList.toggle("active", isActive);
-
-    if (isActive) {
-      btn.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-    }
-  });
-}
-
-function scrollToCurrentView(name) {
-  const currentView = views[name];
-  if (!currentView) return;
-
-  const topbarOffset = getTopbarOffset();
-  const top = window.scrollY + currentView.getBoundingClientRect().top - topbarOffset;
-
-  window.scrollTo({
-    top: Math.max(0, top),
-    behavior: "smooth"
-  });
-}
-
-function setView(name, options = {}) {
-  const { scroll = true, persist = true } = options;
-  const nextView = views[name] ? name : "home";
-
-  Object.keys(views).forEach(key => views[key]?.classList.add("hidden"));
-  views[nextView]?.classList.remove("hidden");
-
-  focusActiveNavLink(nextView);
-
-  if (persist) {
-    localStorage.setItem(VIEW_STORAGE_KEY, nextView);
-  }
-
-  if (nextView === "maps") {
-    setTimeout(() => map?.invalidateSize(true), 150);
-  }
-
-  if (nextView === "perfil") renderPerfilList();
-  if (nextView === "rate") {
-    fillRateSelect();
-    loadMyRatings();
-  }
-  if (nextView === "home") renderRecommended();
-
-  if (scroll) {
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        scrollToCurrentView(nextView);
-        if (nextView === "maps") {
-          setTimeout(() => map?.invalidateSize(true), 220);
-        }
-      }, 30);
-    });
-  }
-}
-
+// AUTH TOGGLE MODAL
+// ============================================================
 document.addEventListener("click", event => {
-  const btn = event.target.closest("[data-view]");
+  const btn = event.target.closest("[data-view='auth']");
   if (!btn) return;
-  setView(btn.dataset.view);
+  const authModal = document.getElementById("view-auth");
+  if (authModal) {
+    authModal.classList.toggle("hidden");
+    if (!authModal.classList.contains("hidden")) {
+      authModal.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
 });
 
-// ============================================================
 // AUTH
 // ============================================================
 function traduzErroApi(code) {
