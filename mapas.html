@@ -20,10 +20,7 @@
         <h2 class="sectionTitle">Mapa Sensorial</h2>
         <p class="sectionSub">Explore locais filtrados pelas suas necessidades</p>
       </div>
-      <div class="row">
-        <button id="btnLiveStart2" class="btn geoBtn">📍 Ao vivo</button>
-        <button id="btnLiveStop2" class="btn geoBtnStop hidden">⏹ Parar</button>
-      </div>
+      
     </div>
 
     <div class="gridMap">
@@ -85,10 +82,27 @@
       </aside>
 
       <section class="mapSection">
-        <div id="map" class="map"></div>
-        <div class="resultsHeader"><h3>Resultados</h3></div>
-        <div id="results" class="cardsList"></div>
+
+        <div class="resultsHeader" style="margin-top:0; border-top:none; padding-top:0;"><h3>Resultados</h3></div>
+        <div id="results" class="cardsList" style="margin-bottom:20px;"></div>
+        <div id="map" class="map" style="flex:1;"></div>
+      
+        
+        
+        
       </section>
+      <aside class="recommendedPanel">
+        <div class="sectionHeader">
+      <div>
+        <h2 class="sectionTitle">Locais Recomendados</h2>
+        <p class="sectionSub">Classificados pelo perfil sensorial ativo</p>
+      </div>
+      <div id="rankingSubtitle"></div>
+    </div>
+    <div id="recommended"></div>
+
+    
+      </aside>
     </div>
   </section>
 
