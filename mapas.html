@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AutenSense ÔÇö Mapa Sensorial</title>
+  <title>AutenSense — Mapa Sensorial</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,8 +21,8 @@
         <p class="sectionSub">Explore locais filtrados pelas suas necessidades</p>
       </div>
       <div class="row">
-        <button id="btnLiveStart2" class="btn geoBtn">­ƒôì Ao vivo</button>
-        <button id="btnLiveStop2" class="btn geoBtnStop hidden">ÔÅ╣ Parar</button>
+        <button id="btnLiveStart2" class="btn geoBtn">📍 Ao vivo</button>
+        <button id="btnLiveStop2" class="btn geoBtnStop hidden">⏹ Parar</button>
       </div>
     </div>
 
@@ -32,7 +32,7 @@
 
         <label class="label">Busca</label>
         <div class="autocompleteWrap">
-          <input id="f_q" class="input" type="text" placeholder="Ex: pra├ºa, bibliotecaÔÇª" autocomplete="off"/>
+          <input id="f_q" class="input" type="text" placeholder="Ex: praça, biblioteca…" autocomplete="off"/>
           <div id="ac_fq" class="autocomplete hidden"></div>
         </div>
 
@@ -43,12 +43,12 @@
           <option value="shopping">Shopping</option>
           <option value="cultural">Cultural / Turismo</option>
           <option value="parque">Parque</option>
-          <option value="infantil">Infantil / Recrea├º├úo</option>
+          <option value="infantil">Infantil / Recreação</option>
           <option value="natureza">Natureza / Museu</option>
           <option value="gastronomia">Gastronomia</option>
         </select>
 
-        <label class="label">N├¡vel sensorial</label>
+        <label class="label">Nível sensorial</label>
         <select id="f_level" class="select">
           <option value="todos">Todos</option>
           <option value="baixo">Tranquilo</option>
@@ -58,7 +58,7 @@
 
         <label class="check">
           <input id="f_near" type="checkbox"/>
-          Somente pr├│ximos (usa sua localiza├º├úo)
+          Somente próximos (usa sua localização)
         </label>
 
         <div class="row" style="margin-top:10px">
@@ -80,7 +80,7 @@
           <div class="legItem"><span class="dot green"></span> Tranquilo</div>
           <div class="legItem"><span class="dot yellow"></span> Moderado</div>
           <div class="legItem"><span class="dot red"></span> Alerta</div>
-          <div class="legItem"><span class="dot blue"></span> Voc├¬</div>
+          <div class="legItem"><span class="dot blue"></span> Você</div>
         </div>
       </aside>
 
