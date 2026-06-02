@@ -2336,6 +2336,7 @@ document.getElementById("btnSavePerfil")?.addEventListener("click", async () => 
   }
 
   const novoPerfil = {
+    // Local / Legacy Keys
     id: "local_" + Date.now(),
     nome,
     idadeFaixa: String(idadeFaixa || ""),
@@ -2344,7 +2345,16 @@ document.getElementById("btnSavePerfil")?.addEventListener("click", async () => 
     sensLuz,
     sensFluxo,
     gatilhos: obs,
-    userId: currentUser.uid
+    userId: currentUser.uid,
+
+    // Backend PostgreSQL Keys (api/perfis.js expectations)
+    usuario_id: currentUser.uid,
+    idade: idadeFaixa ? parseInt(idadeFaixa) : null,
+    nivel_suporte: String(nivelSuporte),
+    sensibilidade_ruido: sensRuido,
+    sensibilidade_luz: sensLuz,
+    sensibilidade_movimento: sensFluxo,
+    observacoes: obs
   };
 
   try {
