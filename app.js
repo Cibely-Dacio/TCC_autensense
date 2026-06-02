@@ -356,18 +356,6 @@ const PLACES_PRESET = [
     lng: -60.0236
   },
   {
-    id: "porto-de-manaus",
-    name: "Porto de Manaus",
-    cat: "cultural",
-    city: "Manaus",
-    address: "",
-    image: "",
-    noise: 3, light: 3, flow: 3,
-    sensory: "alto",
-    lat: -5.65322,
-    lng: -62.226
-  },
-  {
     id: "centro-hist-rico-de-manaus",
     name: "Centro Histórico de Manaus",
     cat: "cultural",
