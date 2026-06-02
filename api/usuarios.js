@@ -40,7 +40,7 @@ module.exports = async (req, res) => {
                 });
             } catch (error) {
                 console.error(error);
-                return res.status(500).json({ erro: true, mensagem: "Erro ao criar conta." });
+                return res.status(500).json({ erro: true, mensagem: "Erro BD: " + (error.message || String(error)) });
             }
         }
 
@@ -64,7 +64,7 @@ module.exports = async (req, res) => {
                 }
             } catch (error) {
                 console.error(error);
-                return res.status(500).json({ erro: true, mensagem: "Erro no login." });
+                return res.status(500).json({ erro: true, mensagem: "Erro Login: " + (error.message || String(error)) });
             }
         }
         
