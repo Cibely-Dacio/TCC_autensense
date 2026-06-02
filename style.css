@@ -221,6 +221,7 @@ body {
   font-family: inherit;
   transition: background .15s, color .15s;
   white-space: nowrap;
+  text-decoration: none;
 }
 .navLink:hover  { background: rgba(109,148,184,.05); color: var(--primary); }
 .navLink.active {
