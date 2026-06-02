@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AutenSense — Mapa Sensorial</title>
+  <title>AutenSense ÔÇö Mapa Sensorial</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,38 +18,38 @@
     <div class="sectionHeader">
       <div>
         <h2 class="sectionTitle">Avaliar Locais</h2>
-        <p class="sectionSub">Sua experiência ajuda toda a comunidade TEA</p>
+        <p class="sectionSub">Sua experi├¬ncia ajuda toda a comunidade TEA</p>
       </div>
     </div>
     <div class="grid2">
       <div class="card">
-        <h3 class="cardTitle">Nova avaliação</h3>
-        <p class="muted small">Compartilhe sua experiência no local.</p>
+        <h3 class="cardTitle">Nova avalia├º├úo</h3>
+        <p class="muted small">Compartilhe sua experi├¬ncia no local.</p>
 
         <label class="label">Qual local deseja avaliar?</label>
         <select id="rate_place" class="select"></select>
 
         <div class="sliderGroup">
           <div class="sliderCard">
-            <div class="sliderLabel">🔊 Ruído</div>
+            <div class="sliderLabel">­ƒöè Ru├¡do</div>
             <input type="range" id="rate_noise" min="1" max="5" value="3" class="slider"/>
             <div class="sliderVal"><span id="rate_noise_val">3</span>/5</div>
           </div>
           <div class="sliderCard">
-            <div class="sliderLabel">💡 Iluminação</div>
+            <div class="sliderLabel">­ƒÆí Ilumina├º├úo</div>
             <input type="range" id="rate_light" min="1" max="5" value="3" class="slider"/>
             <div class="sliderVal"><span id="rate_light_val">3</span>/5</div>
           </div>
           <div class="sliderCard">
-            <div class="sliderLabel">🚶 Movimento</div>
+            <div class="sliderLabel">­ƒÜÂ Movimento</div>
             <input type="range" id="rate_flow" min="1" max="5" value="3" class="slider"/>
             <div class="sliderVal"><span id="rate_flow_val">3</span>/5</div>
           </div>
         </div>
 
-        <label class="label">Comentário (opcional)</label>
-        <textarea id="rate_note" class="textarea" rows="4" placeholder="Descreva sua experiência no local..."></textarea>
-        <button id="btnSendRate" class="btn primary" style="margin-top:14px;width:100%">Enviar avaliação</button>
+        <label class="label">Coment├írio (opcional)</label>
+        <textarea id="rate_note" class="textarea" rows="4" placeholder="Descreva sua experi├¬ncia no local..."></textarea>
+        <button id="btnSendRate" class="btn primary" style="margin-top:14px;width:100%">Enviar avalia├º├úo</button>
         <p id="rateMsg" class="small muted" style="margin-top:8px"></p>
       </div>
 
@@ -63,22 +63,25 @@
             </div>
             <div class="step">
               <div class="stepNum">2</div>
-              <div><strong>Marque os estímulos</strong><p class="muted small">Ruído, luz e movimento (1 = mínimo, 5 = máximo).</p></div>
+              <div><strong>Marque os est├¡mulos</strong><p class="muted small">Ru├¡do, luz e movimento (1 = m├¡nimo, 5 = m├íximo).</p></div>
             </div>
             <div class="step">
               <div class="stepNum">3</div>
-              <div><strong>Envie</strong><p class="muted small">Sua avaliação é salva e compartilhada.</p></div>
+              <div><strong>Envie</strong><p class="muted small">Sua avalia├º├úo ├® salva e compartilhada.</p></div>
             </div>
           </div>
         </div>
         <div class="card">
-          <h3 class="cardTitle">Minhas avaliações</h3>
+          <h3 class="cardTitle">Minhas avalia├º├Áes</h3>
           <div id="myRatings" class="cardsList" style="margin-top:10px"></div>
         </div>
-        <button class="btn soft" data-view="maps">← Voltar ao mapa</button>
+        <button class="btn soft" data-view="maps">ÔåÉ Voltar ao mapa</button>
       </div>
     </div>
   </section>
+
+  <!-- PERFIL TEA -->
+  
 </main>
 <script src="components.js"></script>
 <script type="module" src="app.js"></script>
