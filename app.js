@@ -44,6 +44,10 @@ function limparUsuarioLocal() {
 // ============================================================
 let currentUser = null;
 let perfilAtivo = null;
+try {
+  const salvo = localStorage.getItem("autensense_perfil_ativo");
+  if (salvo) perfilAtivo = JSON.parse(salvo);
+} catch (e) {}
 let favoritosIds = new Set();
 let placesData = [];
 let map = null;
@@ -1600,7 +1604,6 @@ async function carregarLocaisDoBackend() {
 // RECOMENDADOS
 // ============================================================
 function renderRecommended() {
-  if (!document.getElementById("view-home")) return;
   const el = document.getElementById("recommended");
   const subtitle = document.getElementById("rankingSubtitle");
 
@@ -2457,7 +2460,10 @@ async function renderPerfilList() {
         saveLocalPerfis(locais);
       }
 
-      if (perfilAtivo?.id === perfil.id) perfilAtivo = null;
+      if (perfilAtivo?.id === perfil.id) {
+        perfilAtivo = null;
+        localStorage.removeItem("autensense_perfil_ativo");
+      }
       renderPerfilList();
       renderRecommended();
       applyFilters();
