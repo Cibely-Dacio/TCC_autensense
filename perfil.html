@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AutenSense ÔÇö Mapa Sensorial</title>
+  <title>AutenSense — Mapa Sensorial</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,42 +26,42 @@
         <h3 class="cardTitle">Novo perfil</h3>
 
         <label class="label">Nome</label>
-        <input id="perfil_nome" class="input" placeholder="Nome da crian├ºa ou pessoa"/>
+        <input id="perfil_nome" class="input" placeholder="Nome da criança ou pessoa"/>
 
         <label class="label">Idade</label>
         <input id="perfil_idade" class="input" type="number" min="1" max="99" placeholder="Ex: 8"/>
 
-        <label class="label">N├¡vel de suporte (TEA)</label>
+        <label class="label">Nível de suporte (TEA)</label>
         <select id="perfil_nivel" class="select">
-          <option value="1">N├¡vel 1 ÔÇö Baixo suporte</option>
-          <option value="2" selected>N├¡vel 2 ÔÇö Suporte moderado</option>
-          <option value="3">N├¡vel 3 ÔÇö Alto suporte</option>
+          <option value="1">Nível 1 — Baixo suporte</option>
+          <option value="2" selected>Nível 2 — Suporte moderado</option>
+          <option value="3">Nível 3 — Alto suporte</option>
         </select>
 
         <div class="card insetCard" style="margin-top:16px">
           <h4 class="cardTitle" style="font-size:14px">Pesos de Sensibilidade</h4>
-          <p class="muted small">1 = pouco sens├¡vel ┬À 5 = muito sens├¡vel</p>
+          <p class="muted small">1 = pouco sensível · 5 = muito sensível</p>
           <div class="sliderGroup" style="margin-top:10px">
             <div class="sliderCard">
-              <div class="sliderLabel">­ƒöè Ru├¡do</div>
+              <div class="sliderLabel">🔊 Ruído</div>
               <input type="range" id="peso_ruido" min="1" max="5" value="3" class="slider"/>
               <div class="sliderVal"><span id="peso_ruido_val">3</span>/5</div>
             </div>
             <div class="sliderCard">
-              <div class="sliderLabel">­ƒÆí Ilumina├º├úo</div>
+              <div class="sliderLabel">💡 Iluminação</div>
               <input type="range" id="peso_luz" min="1" max="5" value="3" class="slider"/>
               <div class="sliderVal"><span id="peso_luz_val">3</span>/5</div>
             </div>
             <div class="sliderCard">
-              <div class="sliderLabel">­ƒÜÂ Movimento</div>
+              <div class="sliderLabel">🚶 Movimento</div>
               <input type="range" id="peso_movimento" min="1" max="5" value="3" class="slider"/>
               <div class="sliderVal"><span id="peso_movimento_val">3</span>/5</div>
             </div>
           </div>
         </div>
 
-        <label class="label">Observa├º├Áes / gatilhos</label>
-        <textarea id="perfil_obs" class="textarea" rows="3" placeholder="Ex: sens├¡vel a luz fluorescente, barulho de multid├úoÔÇª"></textarea>
+        <label class="label">Observações / gatilhos</label>
+        <textarea id="perfil_obs" class="textarea" rows="3" placeholder="Ex: sensível a luz fluorescente, barulho de multidão…"></textarea>
         <button id="btnSavePerfil" class="btn primary" style="margin-top:14px;width:100%">Salvar Perfil</button>
         <p id="perfilMsg" class="small muted" style="margin-top:8px"></p>
       </div>
