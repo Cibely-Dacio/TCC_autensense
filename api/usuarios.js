@@ -1,3 +1,4 @@
+process.env.POSTGRES_URL = process.env.POSTGRES_URL_NON_POOLING;
 const { sql } = require('@vercel/postgres');
 const bcrypt = require('bcryptjs');
 
