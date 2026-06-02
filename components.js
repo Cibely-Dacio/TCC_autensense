@@ -41,32 +41,36 @@ const authHTML = `
     <div class="grid2">
       <div class="card">
         <h3 class="cardTitle">Criar conta</h3>
-        <label class="label">Nome completo</label>
-        <input id="reg_name" class="input" placeholder="Seu nome"/>
-        <label class="label">E-mail</label>
-        <input id="reg_email" class="input" type="email" placeholder="email@email.com"/>
-        <label class="label">Senha</label>
-        <input id="reg_pass" class="input" type="password" placeholder="Mínimo 6 caracteres"/>
-        <button id="btnRegister" class="btn primary" style="margin-top:14px;width:100%">Criar conta</button>
+        <form autocomplete="off" onsubmit="event.preventDefault();">
+          <label class="label">Nome completo</label>
+          <input id="reg_name" class="input" placeholder="Seu nome" autocomplete="name"/>
+          <label class="label">E-mail</label>
+          <input id="reg_email" class="input" type="email" placeholder="email@email.com" autocomplete="email"/>
+          <label class="label">Senha</label>
+          <input id="reg_pass" class="input" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password"/>
+          <button id="btnRegister" class="btn primary" style="margin-top:14px;width:100%">Criar conta</button>
+        </form>
         <p id="regMsg" class="small muted" style="margin-top:8px"></p>
       </div>
       <div class="card">
         <h3 class="cardTitle">Entrar</h3>
-        <label class="label">E-mail</label>
-        <input id="login_email" class="input" type="email" placeholder="email@email.com"/>
-        <label class="label">Senha</label>
-        <input id="login_pass" class="input" type="password" placeholder="********"/>
+        <form autocomplete="off" onsubmit="event.preventDefault();">
+          <label class="label">E-mail</label>
+          <input id="login_email" class="input" type="email" placeholder="email@email.com" autocomplete="email"/>
+          <label class="label">Senha</label>
+          <input id="login_pass" class="input" type="password" placeholder="********" autocomplete="current-password"/>
 
-        <button id="btnForgotPasswordToggle" class="authLinkBtn" type="button">Esqueci minha senha</button>
+          <button id="btnForgotPasswordToggle" class="authLinkBtn" type="button">Esqueci minha senha</button>
 
-        <div id="forgotPasswordBox" class="forgotPasswordBox hidden">
-          <label class="label">Recuperar senha por e-mail</label>
-          <input id="reset_email" class="input" type="email" placeholder="Digite seu e-mail cadastrado"/>
-          <button id="btnForgotPassword" class="btn soft" style="margin-top:12px;width:100%">Enviar link de redefinição</button>
-          <p id="resetMsg" class="small muted" style="margin-top:8px"></p>
-        </div>
+          <div id="forgotPasswordBox" class="forgotPasswordBox hidden">
+            <label class="label">Recuperar senha por e-mail</label>
+            <input id="reset_email" class="input" type="email" placeholder="Digite seu e-mail cadastrado"/>
+            <button id="btnForgotPassword" class="btn soft" style="margin-top:12px;width:100%">Enviar link de redefinição</button>
+            <p id="resetMsg" class="small muted" style="margin-top:8px"></p>
+          </div>
 
-        <button id="btnLogin" class="btn primary" style="margin-top:14px;width:100%">Entrar</button>
+          <button id="btnLogin" class="btn primary" style="margin-top:14px;width:100%">Entrar</button>
+        </form>
         <button class="btn soft btnLogout hidden" style="margin-top:8px;width:100%">Sair da conta</button>
         <p id="loginMsg" class="small muted" style="margin-top:8px"></p>
       </div>
