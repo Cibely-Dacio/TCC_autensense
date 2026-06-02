@@ -2132,7 +2132,11 @@ document.getElementById("btnClearFilters")?.addEventListener("click", () => {
   if (filterNearCheckbox) filterNearCheckbox.checked = false;
   if (filterRadiusSelect) filterRadiusSelect.value = "3";
 
-  applyFilters();
+  // Limpa também os resultados de busca e o mapa, como solicitado
+  renderMarkers([]);
+  if (resultsEl) {
+    resultsEl.innerHTML = `<div class="emptyState">Filtros limpos. Digite algo ou aplique filtros para buscar.</div>`;
+  }
 });
 
 document.addEventListener("click", event => {
