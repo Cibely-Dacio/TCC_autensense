@@ -1,7 +1,7 @@
 const { createPool } = require('@vercel/postgres');
 
 module.exports = async (req, res) => {
-    const pool = createPool({ connectionString: process.env.POSTGRES_URL_NON_POOLING || process.env.POSTGRES_URL });
+    const pool = createPool({ connectionString: process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL });
     const sql = pool.sql;
     const metodo = req.method;
 
