@@ -1131,6 +1131,7 @@ async function carregarLocaisDoBackend() {
 // RECOMENDADOS
 // ============================================================
 function renderRecommended() {
+  if (!document.getElementById("view-home")) return;
   const el = document.getElementById("recommended");
   const subtitle = document.getElementById("rankingSubtitle");
 
@@ -1700,6 +1701,7 @@ document.getElementById("btnSearch")?.addEventListener("click", () => {
 // AVALIAÇÕES
 // ============================================================
 function fillRateSelect() {
+  if (!document.getElementById("view-rate")) return;
   const select = document.getElementById("rate_place");
   if (!select) return;
 
@@ -1875,6 +1877,7 @@ document.getElementById("btnSavePerfil")?.addEventListener("click", async () => 
 });
 
 async function renderPerfilList() {
+  if (!document.getElementById("view-perfil")) return;
   const el = document.getElementById("perfilList");
   if (!el) return;
 
@@ -2212,16 +2215,7 @@ const autocompleteHome = document.getElementById("ac_q");
 const autocompleteMap = document.getElementById("ac_fq");
 
 attachAutocomplete(homeSearchInput, autocompleteHome, place => {
-  homeSearchInput.value = place.name;
-  initMapIfNeeded();
-  setView("maps");
-
-  if (filterQueryInput) filterQueryInput.value = place.name;
-
-  setTimeout(() => {
-    applyFilters();
-    focusPlace(place);
-  }, 150);
+  window.location.href = "mapas.html?q=" + encodeURIComponent(place.name);
 });
 
 attachAutocomplete(filterQueryInput, autocompleteMap, place => {
@@ -2234,6 +2228,28 @@ attachAutocomplete(filterQueryInput, autocompleteMap, place => {
 });
 
 // ============================================================
+
+// URL FILTERS
+function loadURLFilters() {
+  if (!document.getElementById("view-maps")) return;
+  
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get('q');
+  const city = params.get('city');
+  const cat = params.get('cat');
+  const sens = params.get('sensory');
+
+  let hasFilters = false;
+  if (q && filterQueryInput) { filterQueryInput.value = q; hasFilters = true; }
+  if (city && document.getElementById("filter_city")) { document.getElementById("filter_city").value = city; hasFilters = true; }
+  if (cat && filterCategorySelect) { filterCategorySelect.value = cat; hasFilters = true; }
+  if (sens && filterLevelSelect) { filterLevelSelect.value = sens; hasFilters = true; }
+
+  if (hasFilters) {
+    applyFilters();
+  }
+}
+
 // INICIALIZAÇÃO
 // ============================================================
 initTheme();
