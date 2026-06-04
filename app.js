@@ -1068,9 +1068,9 @@ function getCompatibilityBucket(score) {
 function getCompatibilityReason(place, perfil) {
   const ruido = Number(place.noise || 3);
   const luz = Number(place.light || 3);
-  const movimento = Number(place.flow || 3);
+  const movimento = Number(place.flow || 3);'
 
-  if (!perfil) {
+  if (!perfil) {'
     if (ruido <= 2 && luz <= 2 && movimento <= 2) {
       return "Ambiente calmo e bem equilibrado para a maioria dos perfis.";
     }
